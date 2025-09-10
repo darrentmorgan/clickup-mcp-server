@@ -153,7 +153,8 @@ async function resolveAssignees(assignees: (number | string)[]): Promise<number[
         }
       }
     } catch (error) {
-      console.warn('Failed to resolve some assignees:', error.message);
+      // MCP Protocol: Removed console.warn that breaks JSON-RPC communication
+      // console.warn('Failed to resolve some assignees:', error.message);
       // Continue with the IDs we could resolve
     }
   }
@@ -204,12 +205,14 @@ async function buildUpdateData(params: any): Promise<UpdateTaskData> {
   // Handle time estimate if provided - convert from string to minutes
   if (params.time_estimate !== undefined) {
     // Log the time estimate for debugging
-    console.log(`Original time_estimate: ${params.time_estimate}, typeof: ${typeof params.time_estimate}`);
+    // MCP Protocol: Removed console.log that breaks JSON-RPC communication
+    // console.log(`Original time_estimate: ${params.time_estimate}, typeof: ${typeof params.time_estimate}`);
 
     // Parse and convert to number in minutes
     const minutes = parseTimeEstimate(params.time_estimate);
 
-    console.log(`Converted time_estimate: ${minutes}`);
+    // MCP Protocol: Removed console.log that breaks JSON-RPC communication
+    // console.log(`Converted time_estimate: ${minutes}`);
     updateData.time_estimate = minutes;
   }
 
@@ -226,7 +229,8 @@ async function buildUpdateData(params: any): Promise<UpdateTaskData> {
       try {
         assigneesArray = JSON.parse(params.assignees);
       } catch (error) {
-        console.warn('Failed to parse assignees string:', params.assignees, error);
+        // MCP Protocol: Removed console.warn that breaks JSON-RPC communication
+        // console.warn('Failed to parse assignees string:', params.assignees, error);
         assigneesArray = [];
       }
     }
@@ -582,7 +586,8 @@ export async function createTaskHandler(params) {
       try {
         assigneesArray = JSON.parse(assignees);
       } catch (error) {
-        console.warn('Failed to parse assignees string in createTask:', assignees, error);
+        // MCP Protocol: Removed console.warn that breaks JSON-RPC communication
+        // console.warn('Failed to parse assignees string in createTask:', assignees, error);
         assigneesArray = [];
       }
     }

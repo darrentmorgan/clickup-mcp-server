@@ -460,7 +460,8 @@ export class WorkspaceService extends BaseClickUpService {
         profilePicture: member.user?.profilePicture
       }));
     } catch (error) {
-      console.error('Error getting workspace members:', error);
+      // MCP Protocol: Removed console.error that breaks JSON-RPC communication
+      // console.error('Error getting workspace members:', error);
       throw error;
     }
   }

@@ -112,6 +112,7 @@ export function startSSEServer() {
 
       await transport.handleRequest(req, res, req.body);
     } catch (error) {
+      // MCP Protocol: Send error to stderr instead of stdout to avoid breaking JSON-RPC
       console.error('Error handling MCP request:', error);
       if (!res.headersSent) {
         res.status(500).json({
@@ -191,7 +192,7 @@ export function startSSEServer() {
   // Function to create and start HTTP server
   function startHttpServer() {
     const httpServer = http.createServer(app);
-    httpServer.listen(PORT, '127.0.0.1', () => {
+    httpServer.listen(PORT, '0.0.0.0', () => {
       logger.info('ClickUp MCP Server (HTTP) started', {
         port: PORT,
         protocol: 'http',
@@ -209,13 +210,15 @@ export function startSSEServer() {
         }
       });
 
-      console.log(`✅ ClickUp MCP Server started on http://127.0.0.1:${PORT}`);
-      console.log(`📡 Streamable HTTP endpoint: http://127.0.0.1:${PORT}/mcp`);
-      console.log(`🔄 Legacy SSE endpoint: http://127.0.0.1:${PORT}/sse`);
-      console.log(`❤️  Health check: http://127.0.0.1:${PORT}/health`);
+      // MCP Protocol: Removed console.log statements that break JSON-RPC communication
+      // console.log(`✅ ClickUp MCP Server started on http://127.0.0.1:${PORT}`);
+      // console.log(`📡 Streamable HTTP endpoint: http://127.0.0.1:${PORT}/mcp`);
+      // console.log(`🔄 Legacy SSE endpoint: http://127.0.0.1:${PORT}/sse`);
+      // console.log(`❤️  Health check: http://127.0.0.1:${PORT}/health`);
 
       if (configuration.enableHttps) {
-        console.log(`⚠️  HTTP server running alongside HTTPS - consider disabling HTTP in production`);
+        // MCP Protocol: Removed console.log that breaks JSON-RPC communication
+        // console.log(`⚠️  HTTP server running alongside HTTPS - consider disabling HTTP in production`);
       }
     });
     return httpServer;
@@ -228,8 +231,9 @@ export function startSSEServer() {
         sslKeyPath: configuration.sslKeyPath,
         sslCertPath: configuration.sslCertPath
       });
-      console.log(`❌ HTTPS enabled but SSL_KEY_PATH and SSL_CERT_PATH not provided`);
-      console.log(`   Set SSL_KEY_PATH and SSL_CERT_PATH environment variables`);
+      // MCP Protocol: Removed console.log statements that break JSON-RPC communication
+      // console.log(`❌ HTTPS enabled but SSL_KEY_PATH and SSL_CERT_PATH not provided`);
+      // console.log(`   Set SSL_KEY_PATH and SSL_CERT_PATH environment variables`);
       return null;
     }
 
@@ -253,7 +257,7 @@ export function startSSEServer() {
       }
 
       const httpsServer = https.createServer(httpsOptions, app);
-      httpsServer.listen(HTTPS_PORT, '127.0.0.1', () => {
+      httpsServer.listen(HTTPS_PORT, '0.0.0.0', () => {
         logger.info('ClickUp MCP Server (HTTPS) started', {
           port: HTTPS_PORT,
           protocol: 'https',
@@ -271,10 +275,11 @@ export function startSSEServer() {
           }
         });
 
-        console.log(`🔒 ClickUp MCP Server (HTTPS) started on https://127.0.0.1:${HTTPS_PORT}`);
-        console.log(`📡 Streamable HTTPS endpoint: https://127.0.0.1:${HTTPS_PORT}/mcp`);
-        console.log(`🔄 Legacy SSE HTTPS endpoint: https://127.0.0.1:${HTTPS_PORT}/sse`);
-        console.log(`❤️  Health check HTTPS: https://127.0.0.1:${HTTPS_PORT}/health`);
+        // MCP Protocol: Removed console.log statements that break JSON-RPC communication
+        // console.log(`🔒 ClickUp MCP Server (HTTPS) started on https://127.0.0.1:${HTTPS_PORT}`);
+        // console.log(`📡 Streamable HTTPS endpoint: https://127.0.0.1:${HTTPS_PORT}/mcp`);
+        // console.log(`🔄 Legacy SSE HTTPS endpoint: https://127.0.0.1:${HTTPS_PORT}/sse`);
+        // console.log(`❤️  Health check HTTPS: https://127.0.0.1:${HTTPS_PORT}/health`);
       });
       return httpsServer;
     } catch (error) {
@@ -283,7 +288,8 @@ export function startSSEServer() {
         sslKeyPath: 'REDACTED',
         sslCertPath: 'REDACTED'
       });
-      console.log(`❌ Failed to start HTTPS server. Please check the server configuration and logs for details.`);
+      // MCP Protocol: Removed console.log that breaks JSON-RPC communication
+      // console.log(`❌ Failed to start HTTPS server. Please check the server configuration and logs for details.`);
       return null;
     }
   }
@@ -303,15 +309,17 @@ export function startSSEServer() {
   }
 
   // Security status logging
-  if (configuration.enableSecurityFeatures) {
-    console.log(`🔒 Security features enabled`);
-  } else {
-    console.log(`⚠️  Security features disabled (set ENABLE_SECURITY_FEATURES=true to enable)`);
-  }
+  // MCP Protocol: Removed console.log statements that break JSON-RPC communication
+  // if (configuration.enableSecurityFeatures) {
+  //   console.log(`🔒 Security features enabled`);
+  // } else {
+  //   console.log(`⚠️  Security features disabled (set ENABLE_SECURITY_FEATURES=true to enable)`);
+  // }
 
-  if (!configuration.enableHttps) {
-    console.log(`⚠️  HTTPS disabled (set ENABLE_HTTPS=true with SSL certificates to enable)`);
-  }
+  // MCP Protocol: Removed console.log that breaks JSON-RPC communication
+  // if (!configuration.enableHttps) {
+  //   console.log(`⚠️  HTTPS disabled (set ENABLE_HTTPS=true with SSL certificates to enable)`);
+  // }
 
   return servers;
 }

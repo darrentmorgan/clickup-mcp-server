@@ -60,7 +60,8 @@ const validateDueDate = (dueDate?: string) => {
 
 // Common error handler
 const handleOperationError = (operation: string, error: any) => {
-  console.error(`Error ${operation}:`, error);
+  // MCP Protocol: Removed console.error that breaks JSON-RPC communication
+  // console.error(`Error ${operation}:`, error);
   throw error;
 };
 
